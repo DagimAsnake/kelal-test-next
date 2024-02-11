@@ -1,14 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+// import axios from 'axios';
+import axiosInstance from '../../libs/axiosInstance';
 
-const baseUrl = 'http://localhost:3000/api/topics';
+const baseUrl = '/api/topics';
 
 // Thunk for creating a new post
 export const createPost = createAsyncThunk(
   'posts/createPost',
   async (postData, thunkAPI) => {
     try {
-      const response = await axios.post(baseUrl, postData);
+      const response = await axiosInstance.post(baseUrl, postData);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.topics);
@@ -21,7 +22,7 @@ export const getAllPosts = createAsyncThunk(
   'posts/getAllPosts',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get(baseUrl);
+      const response = await axiosInstance.get(baseUrl);
       return response.data.topics;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -34,7 +35,7 @@ export const getPostById = createAsyncThunk(
   'posts/getPostById',
   async (postId, thunkAPI) => {
     try {
-      const response = await axios.get(`${baseUrl}/${postId}`);
+      const response = await axiosInstance.get(`${baseUrl}/${postId}`);
       return response.data.topic;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -47,7 +48,7 @@ export const updatePost = createAsyncThunk(
   'posts/updatePost',
   async ({ postId, postData }, thunkAPI) => {
     try {
-      const response = await axios.put(`${baseUrl}/${postId}`, postData);
+      const response = await axiosInstance.put(`${baseUrl}/${postId}`, postData);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -60,7 +61,7 @@ export const deletePost = createAsyncThunk(
   'posts/deletePost',
   async (postId, thunkAPI) => {
     try {
-      await axios.delete(`${baseUrl}/${postId}`);
+      await axiosInstance.delete(`${baseUrl}/${postId}`);
       return postId; // Return the deleted postId
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
