@@ -27,8 +27,8 @@ const Home  = () => {
         Welcome CRUD app
       </h1>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-        {songList?.map((song) => (
-          <div key={song?.id} className='bg-gray-100 p-4 rounded-md shadow-md'>
+        {songList?.map((song, index) => (
+          <div key={index} className='bg-gray-100 p-4 rounded-md shadow-md'>
             <div className='text-lg font-bold flex items-center justify-center'>
               <GiLoveSong className='ml-3' />
               <h2 className='text-xl font-semibold pt-2 mb-2 text-center'>
@@ -37,7 +37,7 @@ const Home  = () => {
             </div>
             <div className='flex justify-center'>
               <Link
-                href={`/details/${song.id}`}
+                href={`/details/${song._id}`}
                 className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
               >
                 View Details

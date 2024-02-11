@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const baseUrl = 'https://jsonplaceholder.typicode.com/posts';
+const baseUrl = 'http://localhost:3000/api/topics';
 
 // Thunk for creating a new post
 export const createPost = createAsyncThunk(
@@ -9,10 +9,9 @@ export const createPost = createAsyncThunk(
   async (postData, thunkAPI) => {
     try {
       const response = await axios.post(baseUrl, postData);
-      console.log(response.data);
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
+      return thunkAPI.rejectWithValue(error.response.data.topics);
     }
   }
 );
@@ -23,8 +22,7 @@ export const getAllPosts = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await axios.get(baseUrl);
-      const firstTenPosts = response.data.slice(97); // Slice the array to get only the last 5 posts
-      return firstTenPosts;
+      return response.data.topics;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
@@ -37,7 +35,7 @@ export const getPostById = createAsyncThunk(
   async (postId, thunkAPI) => {
     try {
       const response = await axios.get(`${baseUrl}/${postId}`);
-      return response.data;
+      return response.data.topic;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
@@ -63,7 +61,6 @@ export const deletePost = createAsyncThunk(
   async (postId, thunkAPI) => {
     try {
       await axios.delete(`${baseUrl}/${postId}`);
-      console.log('deleted successfully');
       return postId; // Return the deleted postId
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);

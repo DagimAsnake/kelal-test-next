@@ -63,7 +63,7 @@ const Details = ({ params }) => {
         </div>
         <div className='flex justify-center'>
           <Link
-            href={`/edit/${songList?.id}`}
+            href={`/edit/${songList?._id}`}
             className='bg-blue-500 text-white font-bold py-2 px-4 rounded mr-2 flex items-center'
           >
             <FaEdit className='mr-2' />
